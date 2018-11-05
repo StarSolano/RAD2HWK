@@ -1,0 +1,33 @@
+/** Homework #4
+*	Create a Handler class for your trigger to call that processes all trigger logic
+*	Your Handler class should have/be:
+*	At least one type of “Before Trigger” handling and one type of “After Trigger” handling
+*	Update fields on the object record(s) that the trigger is running on
+*	Update fields on related object records
+*	Be bulkified
+*/
+
+
+public class CaseTriggerHandler {
+    
+    public static void updateCaseStatus(List<Case> cases){
+        for(Case c : cases){
+            if(c.status != 'Working'){
+            	c.status = 'Working';
+        	}
+        }
+        
+    }
+    
+    public static void createTask(List<Case> cases){
+        List<Task> taskList = new List<Task>(); 
+        for(Case c : cases ){
+             Task t = new Task(Subject = 'Action Case', Status = 'Open');
+              t.OwnerId = c.OwnerId;
+               t.WhatId = c.Id;
+               taskList.add(t); 
+    	}
+        insert taskList;
+    }
+
+}
