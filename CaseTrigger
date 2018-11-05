@@ -1,0 +1,19 @@
+//Homework #4, Create a Trigger that processes all trigger events
+
+
+trigger CaseTrigger on Case (before insert, before update, after insert, after update, after delete) {
+
+    
+    if(Trigger.isBefore){
+        if(Trigger.isUpdate){
+            CaseTriggerHandler.updateCaseStatus(Trigger.New);
+        }
+    }
+    
+    if(Trigger.isAfter){
+        if(Trigger.isInsert){
+            CaseTriggerHandler.createTask(Trigger.New);
+        }
+        
+    }
+}
